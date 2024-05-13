@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package block_service;
+option java_outer_classname = "BlockProto";
+option java_package = "com.block";
+option java_multiple_files = false;
+import "google/protobuf/empty.proto";
+
+message Transaction{
+  int32 id = 1;
+  bytes businessInfo = 2;
+}
+
+message Block{
+  int32 index = 1;
+  string hash = 2;
+  string preHash = 3;
+  int64 timestamp = 4;
+  int32 nonce = 5;
+  repeated Transaction transactions = 6;
+}
+
+message BlockChain{
+  repeated Block blocks = 1;
+}
+
+message Msg{
+  string data = 1;
+}
+
+service BlockService{
+  rpc responseLatestBlock(google.protobuf.Empty) returns(Block){};
+  rpc responseBlockChain(google.protobuf.Empty) returns(BlockChain){};
+  rpc broadcast(Block) returns(google.protobuf.Empty){};
+  rpc sendToBoard(Transaction) returns(Msg){};
+}

@@ -1,0 +1,32 @@
+server:
+  port: 8080
+
+#spring:
+#  application:
+#    name: blockChain
+#  main:
+#    web-application-type: none
+
+grpc:
+  server:
+    port: 9000
+#  client:
+#    grpc-server:
+#      address: 'static://127.0.0.1:9000'
+#      negotiation-type: plaintext
+
+spring:
+  redis:
+    host: 192.168.196.129
+    port: 6379
+    password: 1124
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 0
+        max-wait: 100ms
+
+python:
+  port: 9002
+  ip: 127.0.0.1

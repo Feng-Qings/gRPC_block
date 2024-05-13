@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package model_service;
+option java_multiple_files = false;
+option java_package = "com.block";
+option java_outer_classname = "ModelProto";
+
+
+message ModelState{
+  bytes model = 1;
+}
+
+message Msg{
+  string data = 1;
+}
+
+message Accuracy{
+  double acc = 1;
+}
+
+service ModelService{
+  rpc latestModel(ModelState) returns(Msg){};
+  rpc testModel(ModelState) returns(Accuracy){};
+  rpc notice(Msg) returns(Msg){};
+}
