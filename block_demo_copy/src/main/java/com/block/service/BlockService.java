@@ -31,6 +31,9 @@ public class BlockService implements ApplicationRunner {
     @Value("${grpc.server.port}")
     private String port;
 
+    /**
+     * 创世区块
+     */
     public Block createGenesisBlock() {
         Block genesisBlock = new Block();
         //设置创世区块高度为1
@@ -55,7 +58,9 @@ public class BlockService implements ApplicationRunner {
         return genesisBlock;
     }
 
-
+    /**
+     * 创建新区块
+     */
     public Block createNewBlock(int nonce, String previousHash, String hash, List<Transaction> blockTxs) {
         Block block = new Block();
         block.setIndex(blockCache.getBlocks().size() + 1);
