@@ -3230,15 +3230,17 @@ public final class BlockProto {
       "transactions\030\006 \003(\0132\032.block_service.Trans" +
       "action\"2\n\nBlockChain\022$\n\006blocks\030\001 \003(\0132\024.b" +
       "lock_service.Block\"\023\n\003Msg\022\014\n\004data\030\001 \001(\t2" +
-      "\236\002\n\014BlockService\022E\n\023responseLatestBlock\022" +
+      "\220\003\n\014BlockService\022E\n\023responseLatestBlock\022" +
       "\026.google.protobuf.Empty\032\024.block_service." +
       "Block\"\000\022I\n\022responseBlockChain\022\026.google.p" +
       "rotobuf.Empty\032\031.block_service.BlockChain" +
       "\"\000\022;\n\tbroadcast\022\024.block_service.Block\032\026." +
       "google.protobuf.Empty\"\000\022?\n\013sendToBoard\022\032" +
       ".block_service.Transaction\032\022.block_servi" +
-      "ce.Msg\"\000B\031\n\tcom.blockB\nBlockProtoP\000b\006pro" +
-      "to3"
+      "ce.Msg\"\000\022>\n\ntestLeader\022\032.block_service.T" +
+      "ransaction\032\022.block_service.Msg\"\000\0220\n\006noti" +
+      "ce\022\022.block_service.Msg\032\022.block_service.M" +
+      "sgB\031\n\tcom.blockB\nBlockProtoP\000b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,

@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -48,21 +49,27 @@ public class ModelClient {
             String blockString = stringRedisTemplate.opsForValue().get(hash);
             Block block = JSON.parseObject(blockString, Block.class);
             assert block != null;
-            Transaction transaction = block.getTransactions().get(1);
+            Transaction transaction = block.getTransactions().get(0);
             ByteString model = ByteString.copyFrom(transaction.getBusinessInfo());
             ModelServiceGrpc.ModelServiceFutureStub futureStub = ModelServiceGrpc.newFutureStub(channel);
-            ListenableFuture<ModelProto.Msg> msgListenableFuture = futureStub.latestModel(ModelProto.ModelState.newBuilder().setModel(model).build());
+            ListenableFuture<ModelProto.Msg> msgListenableFuture = futureStub.latestModel(ModelProto.ModelInfo.newBuilder().setModel(model).build());
             Futures.addCallback(msgListenableFuture, new FutureCallback<ModelProto.Msg>() {
                 @Override
                 public void onSuccess(ModelProto.Msg result) {
                     log.info(result.getData());
                 }
-
                 @Override
                 public void onFailure(Throwable t) {
-                    log.error("模型传输错误!");
+                    log.error("模型传输错误!",t);
                 }
             }, Executors.newCachedThreadPool());
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                // 恢复线程的中断状态并记录中断异常
+                Thread.currentThread().interrupt();
+                log.error("线程被中断", e);
+            }
         }catch (Exception e){
             log.error(e.getMessage(),e);
         }finally {
@@ -101,24 +108,36 @@ public class ModelClient {
                 }
                 @Override
                 public void onFailure(Throwable t) {
-                    log.error("notice error");
+
                 }
             }, Executors.newCachedThreadPool());
-            Thread.sleep(100);
+
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                // 恢复线程的中断状态并记录中断异常
+                Thread.currentThread().interrupt();
+                log.error("线程被中断", e);
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }finally {
             channel.shutdown();
         }
     }
-//    public void notice(String msg){
-//        ManagedChannel channel = getChannel();
+
+//    @Async
+//    public void init(String address, int port){
+//        ManagedChannel channel = ManagedChannelBuilder.forAddress(address, port).usePlaintext().build();
 //        try {
 //            ModelServiceGrpc.ModelServiceBlockingStub stub = ModelServiceGrpc.newBlockingStub(channel);
-//            ModelProto.Msg notice = stub.notice(ModelProto.Msg.newBuilder().setData(msg).build());
-//            System.out.println(notice.getData());
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
+//            ModelProto.initData.Builder builder = ModelProto.initData.newBuilder();
+//            builder.setAccThreshold(0.7);
+//            builder.setModelNumThreshold(5);
+//            ModelProto.Msg msg = stub.init(builder.build());
+//            System.out.println(msg.getData());
+//        }catch (Exception e){
+//            log.error(e.getMessage(), e);
 //        }finally {
 //            channel.shutdown();
 //        }

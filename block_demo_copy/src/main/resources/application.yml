@@ -25,6 +25,8 @@ spring:
         max-idle: 8
         min-idle: 0
         max-wait: 100ms
+  main:
+    web-application-type: none
 
 
 python:

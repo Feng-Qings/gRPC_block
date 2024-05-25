@@ -15,27 +15,27 @@ public final class ModelServiceGrpc {
   public static final java.lang.String SERVICE_NAME = "model_service.ModelService";
 
   // Static method descriptors that strictly reflect the proto.
-  private static volatile io.grpc.MethodDescriptor<com.block.ModelProto.ModelState,
+  private static volatile io.grpc.MethodDescriptor<com.block.ModelProto.ModelInfo,
       com.block.ModelProto.Msg> getLatestModelMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "latestModel",
-      requestType = com.block.ModelProto.ModelState.class,
+      requestType = com.block.ModelProto.ModelInfo.class,
       responseType = com.block.ModelProto.Msg.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.block.ModelProto.ModelState,
+  public static io.grpc.MethodDescriptor<com.block.ModelProto.ModelInfo,
       com.block.ModelProto.Msg> getLatestModelMethod() {
-    io.grpc.MethodDescriptor<com.block.ModelProto.ModelState, com.block.ModelProto.Msg> getLatestModelMethod;
+    io.grpc.MethodDescriptor<com.block.ModelProto.ModelInfo, com.block.ModelProto.Msg> getLatestModelMethod;
     if ((getLatestModelMethod = ModelServiceGrpc.getLatestModelMethod) == null) {
       synchronized (ModelServiceGrpc.class) {
         if ((getLatestModelMethod = ModelServiceGrpc.getLatestModelMethod) == null) {
           ModelServiceGrpc.getLatestModelMethod = getLatestModelMethod =
-              io.grpc.MethodDescriptor.<com.block.ModelProto.ModelState, com.block.ModelProto.Msg>newBuilder()
+              io.grpc.MethodDescriptor.<com.block.ModelProto.ModelInfo, com.block.ModelProto.Msg>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "latestModel"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.block.ModelProto.ModelState.getDefaultInstance()))
+                  com.block.ModelProto.ModelInfo.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   com.block.ModelProto.Msg.getDefaultInstance()))
               .setSchemaDescriptor(new ModelServiceMethodDescriptorSupplier("latestModel"))
@@ -108,6 +108,68 @@ public final class ModelServiceGrpc {
     return getNoticeMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.block.ModelProto.ModelState,
+      com.block.ModelProto.Msg> getGlobalModelMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "globalModel",
+      requestType = com.block.ModelProto.ModelState.class,
+      responseType = com.block.ModelProto.Msg.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.block.ModelProto.ModelState,
+      com.block.ModelProto.Msg> getGlobalModelMethod() {
+    io.grpc.MethodDescriptor<com.block.ModelProto.ModelState, com.block.ModelProto.Msg> getGlobalModelMethod;
+    if ((getGlobalModelMethod = ModelServiceGrpc.getGlobalModelMethod) == null) {
+      synchronized (ModelServiceGrpc.class) {
+        if ((getGlobalModelMethod = ModelServiceGrpc.getGlobalModelMethod) == null) {
+          ModelServiceGrpc.getGlobalModelMethod = getGlobalModelMethod =
+              io.grpc.MethodDescriptor.<com.block.ModelProto.ModelState, com.block.ModelProto.Msg>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "globalModel"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.block.ModelProto.ModelState.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.block.ModelProto.Msg.getDefaultInstance()))
+              .setSchemaDescriptor(new ModelServiceMethodDescriptorSupplier("globalModel"))
+              .build();
+        }
+      }
+    }
+    return getGlobalModelMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<com.block.ModelProto.initData,
+      com.block.ModelProto.Msg> getInitMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "init",
+      requestType = com.block.ModelProto.initData.class,
+      responseType = com.block.ModelProto.Msg.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.block.ModelProto.initData,
+      com.block.ModelProto.Msg> getInitMethod() {
+    io.grpc.MethodDescriptor<com.block.ModelProto.initData, com.block.ModelProto.Msg> getInitMethod;
+    if ((getInitMethod = ModelServiceGrpc.getInitMethod) == null) {
+      synchronized (ModelServiceGrpc.class) {
+        if ((getInitMethod = ModelServiceGrpc.getInitMethod) == null) {
+          ModelServiceGrpc.getInitMethod = getInitMethod =
+              io.grpc.MethodDescriptor.<com.block.ModelProto.initData, com.block.ModelProto.Msg>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "init"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.block.ModelProto.initData.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.block.ModelProto.Msg.getDefaultInstance()))
+              .setSchemaDescriptor(new ModelServiceMethodDescriptorSupplier("init"))
+              .build();
+        }
+      }
+    }
+    return getInitMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -158,7 +220,7 @@ public final class ModelServiceGrpc {
 
     /**
      */
-    default void latestModel(com.block.ModelProto.ModelState request,
+    default void latestModel(com.block.ModelProto.ModelInfo request,
         io.grpc.stub.StreamObserver<com.block.ModelProto.Msg> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getLatestModelMethod(), responseObserver);
     }
@@ -175,6 +237,20 @@ public final class ModelServiceGrpc {
     default void notice(com.block.ModelProto.Msg request,
         io.grpc.stub.StreamObserver<com.block.ModelProto.Msg> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getNoticeMethod(), responseObserver);
+    }
+
+    /**
+     */
+    default void globalModel(com.block.ModelProto.ModelState request,
+        io.grpc.stub.StreamObserver<com.block.ModelProto.Msg> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGlobalModelMethod(), responseObserver);
+    }
+
+    /**
+     */
+    default void init(com.block.ModelProto.initData request,
+        io.grpc.stub.StreamObserver<com.block.ModelProto.Msg> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getInitMethod(), responseObserver);
     }
   }
 
@@ -207,7 +283,7 @@ public final class ModelServiceGrpc {
 
     /**
      */
-    public void latestModel(com.block.ModelProto.ModelState request,
+    public void latestModel(com.block.ModelProto.ModelInfo request,
         io.grpc.stub.StreamObserver<com.block.ModelProto.Msg> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getLatestModelMethod(), getCallOptions()), request, responseObserver);
@@ -227,6 +303,22 @@ public final class ModelServiceGrpc {
         io.grpc.stub.StreamObserver<com.block.ModelProto.Msg> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getNoticeMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void globalModel(com.block.ModelProto.ModelState request,
+        io.grpc.stub.StreamObserver<com.block.ModelProto.Msg> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getGlobalModelMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void init(com.block.ModelProto.initData request,
+        io.grpc.stub.StreamObserver<com.block.ModelProto.Msg> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getInitMethod(), getCallOptions()), request, responseObserver);
     }
   }
 
@@ -248,7 +340,7 @@ public final class ModelServiceGrpc {
 
     /**
      */
-    public com.block.ModelProto.Msg latestModel(com.block.ModelProto.ModelState request) {
+    public com.block.ModelProto.Msg latestModel(com.block.ModelProto.ModelInfo request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getLatestModelMethod(), getCallOptions(), request);
     }
@@ -265,6 +357,20 @@ public final class ModelServiceGrpc {
     public com.block.ModelProto.Msg notice(com.block.ModelProto.Msg request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getNoticeMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.block.ModelProto.Msg globalModel(com.block.ModelProto.ModelState request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getGlobalModelMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.block.ModelProto.Msg init(com.block.ModelProto.initData request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getInitMethod(), getCallOptions(), request);
     }
   }
 
@@ -287,7 +393,7 @@ public final class ModelServiceGrpc {
     /**
      */
     public com.google.common.util.concurrent.ListenableFuture<com.block.ModelProto.Msg> latestModel(
-        com.block.ModelProto.ModelState request) {
+        com.block.ModelProto.ModelInfo request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getLatestModelMethod(), getCallOptions()), request);
     }
@@ -307,11 +413,29 @@ public final class ModelServiceGrpc {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getNoticeMethod(), getCallOptions()), request);
     }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.block.ModelProto.Msg> globalModel(
+        com.block.ModelProto.ModelState request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getGlobalModelMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.block.ModelProto.Msg> init(
+        com.block.ModelProto.initData request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getInitMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_LATEST_MODEL = 0;
   private static final int METHODID_TEST_MODEL = 1;
   private static final int METHODID_NOTICE = 2;
+  private static final int METHODID_GLOBAL_MODEL = 3;
+  private static final int METHODID_INIT = 4;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -331,7 +455,7 @@ public final class ModelServiceGrpc {
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
         case METHODID_LATEST_MODEL:
-          serviceImpl.latestModel((com.block.ModelProto.ModelState) request,
+          serviceImpl.latestModel((com.block.ModelProto.ModelInfo) request,
               (io.grpc.stub.StreamObserver<com.block.ModelProto.Msg>) responseObserver);
           break;
         case METHODID_TEST_MODEL:
@@ -340,6 +464,14 @@ public final class ModelServiceGrpc {
           break;
         case METHODID_NOTICE:
           serviceImpl.notice((com.block.ModelProto.Msg) request,
+              (io.grpc.stub.StreamObserver<com.block.ModelProto.Msg>) responseObserver);
+          break;
+        case METHODID_GLOBAL_MODEL:
+          serviceImpl.globalModel((com.block.ModelProto.ModelState) request,
+              (io.grpc.stub.StreamObserver<com.block.ModelProto.Msg>) responseObserver);
+          break;
+        case METHODID_INIT:
+          serviceImpl.init((com.block.ModelProto.initData) request,
               (io.grpc.stub.StreamObserver<com.block.ModelProto.Msg>) responseObserver);
           break;
         default:
@@ -364,7 +496,7 @@ public final class ModelServiceGrpc {
           getLatestModelMethod(),
           io.grpc.stub.ServerCalls.asyncUnaryCall(
             new MethodHandlers<
-              com.block.ModelProto.ModelState,
+              com.block.ModelProto.ModelInfo,
               com.block.ModelProto.Msg>(
                 service, METHODID_LATEST_MODEL)))
         .addMethod(
@@ -381,6 +513,20 @@ public final class ModelServiceGrpc {
               com.block.ModelProto.Msg,
               com.block.ModelProto.Msg>(
                 service, METHODID_NOTICE)))
+        .addMethod(
+          getGlobalModelMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.block.ModelProto.ModelState,
+              com.block.ModelProto.Msg>(
+                service, METHODID_GLOBAL_MODEL)))
+        .addMethod(
+          getInitMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.block.ModelProto.initData,
+              com.block.ModelProto.Msg>(
+                service, METHODID_INIT)))
         .build();
   }
 
@@ -432,6 +578,8 @@ public final class ModelServiceGrpc {
               .addMethod(getLatestModelMethod())
               .addMethod(getTestModelMethod())
               .addMethod(getNoticeMethod())
+              .addMethod(getGlobalModelMethod())
+              .addMethod(getInitMethod())
               .build();
         }
       }

@@ -1,13 +1,11 @@
 server:
-  port: 8080
+  port: 8070
+
 
 grpc:
   server:
-    port: 9000
-#  client:
-#    grpc-server:
-#      address: 'static://127.0.0.1:9000'
-#      negotiation-type: plaintext
+    port: 9020
+
 
 spring:
   redis:
@@ -20,9 +18,3 @@ spring:
         max-idle: 8
         min-idle: 0
         max-wait: 100ms
-  main:
-    web-application-type: none
-
-python:
-  port: 9002
-  ip: 127.0.0.1

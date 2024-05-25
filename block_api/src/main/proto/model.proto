@@ -18,8 +18,20 @@ message Accuracy{
   double acc = 1;
 }
 
+message initData{
+  double accThreshold = 1;
+  int32 modelNumThreshold = 2;
+}
+
+message ModelInfo{
+  bytes model = 1;
+  string address = 2;
+}
+
 service ModelService{
-  rpc latestModel(ModelState) returns(Msg){};
+  rpc latestModel(ModelInfo) returns(Msg){};
   rpc testModel(ModelState) returns(Accuracy){};
   rpc notice(Msg) returns(Msg){};
+  rpc globalModel(ModelState) returns(Msg){};
+  rpc init(initData) returns(Msg){};
 }

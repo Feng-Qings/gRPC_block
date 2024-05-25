@@ -41,7 +41,7 @@ public class BlockService implements ApplicationRunner {
         genesisBlock.setTimestamp(System.currentTimeMillis());
         genesisBlock.setNonce(1);
         //封装业务数据
-        List<Transaction> tsaList = new ArrayList<Transaction>();
+        List<Transaction> tsaList = new ArrayList<>();
         Transaction tsa = new Transaction(1, "这是创世区块".getBytes());
         tsaList.add(tsa);
         Transaction tsa2 = new Transaction(2, "区块链高度为：1".getBytes());
