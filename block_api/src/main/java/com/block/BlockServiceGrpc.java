@@ -139,37 +139,6 @@ public final class BlockServiceGrpc {
     return getSendToBoardMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<com.block.BlockProto.Transaction,
-      com.block.BlockProto.Msg> getTestLeaderMethod;
-
-  @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "testLeader",
-      requestType = com.block.BlockProto.Transaction.class,
-      responseType = com.block.BlockProto.Msg.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.block.BlockProto.Transaction,
-      com.block.BlockProto.Msg> getTestLeaderMethod() {
-    io.grpc.MethodDescriptor<com.block.BlockProto.Transaction, com.block.BlockProto.Msg> getTestLeaderMethod;
-    if ((getTestLeaderMethod = BlockServiceGrpc.getTestLeaderMethod) == null) {
-      synchronized (BlockServiceGrpc.class) {
-        if ((getTestLeaderMethod = BlockServiceGrpc.getTestLeaderMethod) == null) {
-          BlockServiceGrpc.getTestLeaderMethod = getTestLeaderMethod =
-              io.grpc.MethodDescriptor.<com.block.BlockProto.Transaction, com.block.BlockProto.Msg>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "testLeader"))
-              .setSampledToLocalTracing(true)
-              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.block.BlockProto.Transaction.getDefaultInstance()))
-              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.block.BlockProto.Msg.getDefaultInstance()))
-              .setSchemaDescriptor(new BlockServiceMethodDescriptorSupplier("testLeader"))
-              .build();
-        }
-      }
-    }
-    return getTestLeaderMethod;
-  }
-
   private static volatile io.grpc.MethodDescriptor<com.block.BlockProto.Msg,
       com.block.BlockProto.Msg> getNoticeMethod;
 
@@ -279,13 +248,6 @@ public final class BlockServiceGrpc {
 
     /**
      */
-    default void testLeader(com.block.BlockProto.Transaction request,
-        io.grpc.stub.StreamObserver<com.block.BlockProto.Msg> responseObserver) {
-      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getTestLeaderMethod(), responseObserver);
-    }
-
-    /**
-     */
     default void notice(com.block.BlockProto.Msg request,
         io.grpc.stub.StreamObserver<com.block.BlockProto.Msg> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getNoticeMethod(), responseObserver);
@@ -353,14 +315,6 @@ public final class BlockServiceGrpc {
 
     /**
      */
-    public void testLeader(com.block.BlockProto.Transaction request,
-        io.grpc.stub.StreamObserver<com.block.BlockProto.Msg> responseObserver) {
-      io.grpc.stub.ClientCalls.asyncUnaryCall(
-          getChannel().newCall(getTestLeaderMethod(), getCallOptions()), request, responseObserver);
-    }
-
-    /**
-     */
     public void notice(com.block.BlockProto.Msg request,
         io.grpc.stub.StreamObserver<com.block.BlockProto.Msg> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
@@ -410,13 +364,6 @@ public final class BlockServiceGrpc {
     public com.block.BlockProto.Msg sendToBoard(com.block.BlockProto.Transaction request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getSendToBoardMethod(), getCallOptions(), request);
-    }
-
-    /**
-     */
-    public com.block.BlockProto.Msg testLeader(com.block.BlockProto.Transaction request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
-          getChannel(), getTestLeaderMethod(), getCallOptions(), request);
     }
 
     /**
@@ -477,14 +424,6 @@ public final class BlockServiceGrpc {
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<com.block.BlockProto.Msg> testLeader(
-        com.block.BlockProto.Transaction request) {
-      return io.grpc.stub.ClientCalls.futureUnaryCall(
-          getChannel().newCall(getTestLeaderMethod(), getCallOptions()), request);
-    }
-
-    /**
-     */
     public com.google.common.util.concurrent.ListenableFuture<com.block.BlockProto.Msg> notice(
         com.block.BlockProto.Msg request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
@@ -496,8 +435,7 @@ public final class BlockServiceGrpc {
   private static final int METHODID_RESPONSE_BLOCK_CHAIN = 1;
   private static final int METHODID_BROADCAST = 2;
   private static final int METHODID_SEND_TO_BOARD = 3;
-  private static final int METHODID_TEST_LEADER = 4;
-  private static final int METHODID_NOTICE = 5;
+  private static final int METHODID_NOTICE = 4;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -530,10 +468,6 @@ public final class BlockServiceGrpc {
           break;
         case METHODID_SEND_TO_BOARD:
           serviceImpl.sendToBoard((com.block.BlockProto.Transaction) request,
-              (io.grpc.stub.StreamObserver<com.block.BlockProto.Msg>) responseObserver);
-          break;
-        case METHODID_TEST_LEADER:
-          serviceImpl.testLeader((com.block.BlockProto.Transaction) request,
               (io.grpc.stub.StreamObserver<com.block.BlockProto.Msg>) responseObserver);
           break;
         case METHODID_NOTICE:
@@ -586,13 +520,6 @@ public final class BlockServiceGrpc {
               com.block.BlockProto.Transaction,
               com.block.BlockProto.Msg>(
                 service, METHODID_SEND_TO_BOARD)))
-        .addMethod(
-          getTestLeaderMethod(),
-          io.grpc.stub.ServerCalls.asyncUnaryCall(
-            new MethodHandlers<
-              com.block.BlockProto.Transaction,
-              com.block.BlockProto.Msg>(
-                service, METHODID_TEST_LEADER)))
         .addMethod(
           getNoticeMethod(),
           io.grpc.stub.ServerCalls.asyncUnaryCall(
@@ -652,7 +579,6 @@ public final class BlockServiceGrpc {
               .addMethod(getResponseBlockChainMethod())
               .addMethod(getBroadcastMethod())
               .addMethod(getSendToBoardMethod())
-              .addMethod(getTestLeaderMethod())
               .addMethod(getNoticeMethod())
               .build();
         }

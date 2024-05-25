@@ -46,25 +46,6 @@ public class BlockClient {
         return ManagedChannelBuilder.forAddress(ip, port).usePlaintext().build();
     }
 
-    /**
-     *  将模型发送给委员会验证
-     * @param transaction 交易数据
-     * @return 准确度
-     * 发送给委员会，目前发送给开始获取区块的节点，同步
-     */
-//    public double sendToTest(Transaction transaction){
-//        ManagedChannel channel = getChannel();
-//        try {
-//            BlockServiceGrpc.BlockServiceBlockingStub blockingStub = BlockServiceGrpc.newBlockingStub(channel);
-//            BlockProto.Msg msg = blockingStub.testLeader(ProtobufBeanUtil.transactionToProto(transaction));
-//            return Double.parseDouble(msg.getData());
-//        } catch (Exception e) {
-//            log.error(e.getMessage(), e);
-//        }finally {
-//            channel.shutdown();
-//        }
-//        return 0;
-//    }
 
     /**
      * 异步
@@ -222,32 +203,6 @@ public class BlockClient {
         }
     }
 
-//    public void init(String address, int port){
-//        ManagedChannel channel = ManagedChannelBuilder.forAddress(address, port).usePlaintext().build();
-//        try {
-//            ModelServiceGrpc.ModelServiceFutureStub futureStub = ModelServiceGrpc.newFutureStub(channel);
-//            ModelProto.initData.Builder builder = ModelProto.initData.newBuilder();
-//            builder.setAccThreshold(0.7);
-//            builder.setModelNumThreshold(5);
-//            ListenableFuture<ModelProto.Msg> listenableFuture = futureStub.init(builder.build());
-//            Futures.addCallback(listenableFuture, new FutureCallback<ModelProto.Msg>() {
-//                @Override
-//                public void onSuccess(ModelProto.Msg result) {
-//                    log.info(result.getData());
-//                }
-//
-//                @Override
-//                public void onFailure(Throwable t) {
-//                    log.error(t.getMessage(),t);
-//                }
-//            }, Executors.newCachedThreadPool());
-//            Thread.sleep(100);
-//        }catch (Exception e){
-//            log.error(e.getMessage(), e);
-//        }finally {
-//            channel.shutdown();
-//        }
-//    }
     @Async
     public void init(String address, int port){
         ManagedChannel channel = ManagedChannelBuilder.forAddress(address, port).usePlaintext().build();

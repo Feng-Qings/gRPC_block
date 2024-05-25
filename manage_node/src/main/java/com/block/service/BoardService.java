@@ -2,8 +2,6 @@ package com.block.service;
 
 import com.block.BlockProto;
 import com.block.BlockServiceGrpc;
-import com.block.ModelProto;
-import com.block.ModelServiceGrpc;
 import com.block.utils.BlockConstant;
 import com.block.utils.NoticeConstant;
 import com.google.common.util.concurrent.FutureCallback;

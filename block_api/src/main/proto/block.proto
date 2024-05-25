@@ -33,6 +33,5 @@ service BlockService{
   rpc responseBlockChain(google.protobuf.Empty) returns(BlockChain){};
   rpc broadcast(Block) returns(google.protobuf.Empty){};
   rpc sendToBoard(Transaction) returns(Msg){};
-  rpc testLeader(Transaction) returns(Msg){};
   rpc notice(Msg) returns(Msg);
 }

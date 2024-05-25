@@ -5,20 +5,15 @@ import com.block.BlockServiceGrpc;
 import com.block.model.Block;
 import com.block.service.BlockService;
 import com.block.utils.BlockCache;
-import com.block.utils.BlockConstant;
 import com.block.utils.ProtobufBeanUtil;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Empty;
-import io.grpc.ManagedChannel;
-import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -77,45 +72,6 @@ public class BlockServer extends BlockServiceGrpc.BlockServiceImplBase {
         responseObserver.onCompleted();
     }
 
-    /**
-     *同步，此节点为验证领导节点，发送给所有委员会验证
-     */
-    @Override
-    public void testLeader(BlockProto.Transaction request, StreamObserver<BlockProto.Msg> responseObserver) {
-        List<Double> accList = new ArrayList<>();
-        Long size = stringRedisTemplate.opsForList().size(BlockConstant.BOARD_Addresses);
-        List<String> boardAddress = stringRedisTemplate.opsForList().range(BlockConstant.BOARD_Addresses, 0, size - 1);
-        assert boardAddress != null;
-        for (String address : boardAddress) {
-            String[] split = address.split(":");
-            double v = test(request, split[0], Integer.parseInt(split[1]));
-            accList.add(v);
-        }
-        Collections.sort(accList);
-        int length = accList.size();
-        double mid = 0;
-        if (size % 2 == 1) {
-            mid = accList.get(length / 2);
-        } else {
-            mid = (accList.get(length / 2 - 1) + accList.get(length / 2)) / 2.0;
-        }
-        responseObserver.onNext(BlockProto.Msg.newBuilder().setData(String.valueOf(mid)).build());
-        responseObserver.onCompleted();
-    }
-
-    public double test(BlockProto.Transaction transaction, String ip, int port){
-        ManagedChannel channel = ManagedChannelBuilder.forAddress(ip, port).usePlaintext().build();
-        try {
-            BlockServiceGrpc.BlockServiceBlockingStub blockingStub = BlockServiceGrpc.newBlockingStub(channel);
-            BlockProto.Msg msg = blockingStub.sendToBoard(transaction);
-            return Double.parseDouble(msg.getData());
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-        }finally {
-            channel.shutdown();
-        }
-        return 0;
-    }
 
     /**
      *  对模型进行验证
