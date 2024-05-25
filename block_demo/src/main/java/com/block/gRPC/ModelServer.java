@@ -117,17 +117,12 @@ public class ModelServer extends ModelServiceGrpc.ModelServiceImplBase {
         for (Object object : objects) {
             Contributor contributor = new Contributor();
             contributor.setAddress(object.toString());
-            contributor.setValue(entries.get(object).toString());
+            contributor.setValue(Double.parseDouble(entries.get(object).toString()));
             contributors.add(contributor);
         }
-        //根据贡献值排序
-        contributors.sort(new Comparator<Contributor>() {
-            @Override
-            public int compare(Contributor o1, Contributor o2) {
-                return o2.getValue().compareTo(o1.getValue());
-            }
-        });
+        contributors.sort(Comparator.comparingDouble(Contributor::getValue).reversed());
         Set<String> boards = new HashSet<>();
+        log.info(contributors.toString());
         // TODO 暂定委员只有1个
         for (int i = 0; i < 1; i++) {
             boards.add(contributors.get(i).getAddress());

@@ -79,14 +79,13 @@ public class BlockClient {
             int length = results.size();
             log.info("length:" + length);
             //中位数
-//            double mid = 0;
-//            if (size % 2 == 1) {
-//                mid = results.get(length / 2);
-//            } else {
-//                mid = (results.get(length / 2 - 1) + results.get(length / 2)) / 2.0;
-//            }
-//            return mid;
-            return 0.8;
+            double mid = 0;
+            if (size % 2 == 1) {
+                mid = results.get(length / 2);
+            } else {
+                mid = (results.get(length / 2 - 1) + results.get(length / 2)) / 2.0;
+            }
+            return mid;
         } catch (InterruptedException | ExecutionException e) {
             log.error(e.getMessage(), e);
         }
