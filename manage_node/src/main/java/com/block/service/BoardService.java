@@ -24,6 +24,7 @@ public class BoardService {
     private final StringRedisTemplate stringRedisTemplate;
 
     public Set<Integer> setRandomBoard(){
+        stringRedisTemplate.opsForValue().set(BlockConstant.GLOBAL_ROUNDS, "5");
         Long size = stringRedisTemplate.opsForList().size(BlockConstant.IP_Addresses);
         assert size != null;
         long rate = size / 3;

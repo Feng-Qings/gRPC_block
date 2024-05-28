@@ -86,6 +86,10 @@ public class ModelServer extends ModelServiceGrpc.ModelServiceImplBase {
         //stopAll();
 
         ByteString model = request.getModel();
+
+        responseObserver.onNext(ModelProto.Msg.newBuilder().setData("全局模型接收成功").build());
+        responseObserver.onCompleted();
+
         List<Transaction> transactions = new ArrayList<>();
         Transaction transaction = new Transaction();
         transaction.setId(1);
@@ -96,13 +100,18 @@ public class ModelServer extends ModelServiceGrpc.ModelServiceImplBase {
         String newBlockHash = blockService.calculateHash(blockCache.getLatestBlock().getHash(), transactions, nonce);
         Block block = blockService.createNewBlock(nonce, blockCache.getLatestBlock().getHash(), newBlockHash, transactions);
         blockClient.broadcast(block);
-        //重置委员会
-        resetBoard();
-        //开始训练
-        stringRedisTemplate.opsForValue().set(BlockConstant.GLOBAL_STATE, BlockConstant.GLOBAL_TRAIN);
-        responseObserver.onNext(ModelProto.Msg.newBuilder().setData("全局模型接收成功").build());
-        responseObserver.onCompleted();
 
+        stringRedisTemplate.opsForValue().decrement(BlockConstant.GLOBAL_ROUNDS);
+        String rounds = stringRedisTemplate.opsForValue().get(BlockConstant.GLOBAL_ROUNDS);
+        assert rounds != null;
+        if (Integer.parseInt(rounds) <= 0 ){
+            finishTrain();
+        }else {
+            //重置委员会
+            resetBoard();
+            //开始训练
+            stringRedisTemplate.opsForValue().set(BlockConstant.GLOBAL_STATE, BlockConstant.GLOBAL_TRAIN);
+        }
     }
 
     /**
