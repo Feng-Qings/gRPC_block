@@ -8,6 +8,7 @@ import com.block.model.Block;
 import com.block.model.Contributor;
 import com.block.model.Transaction;
 import com.block.service.BlockService;
+import com.block.utils.Args;
 import com.block.utils.BlockCache;
 import com.block.utils.BlockConstant;
 import com.block.utils.NoticeConstant;
@@ -57,7 +58,9 @@ public class ModelServer extends ModelServiceGrpc.ModelServiceImplBase {
         if (BlockConstant.GLOBAL_TRAIN.equals(state)){
             //将model发送给board判断最新model准确度
             double v = blockClient.sendToTest(transaction);
-            if (v > 0.7){
+            String accThreshold = stringRedisTemplate.opsForValue().get(Args.ACC_THRESHOLD.getName());
+            assert accThreshold != null;
+            if (v >= Integer.parseInt(accThreshold)){
                 //TODO 贡献度暂使用准确度相加
                 Object o = stringRedisTemplate.opsForHash().get(BlockConstant.CONTRIBUTORS, address);
                 double contribute = o == null ? 0 : Double.parseDouble(o.toString());
@@ -144,18 +147,6 @@ public class ModelServer extends ModelServiceGrpc.ModelServiceImplBase {
         resetTrain(boards);
     }
 
-    /**
-     * 暂停所有训练
-     */
-    public void stopAll(){
-        Long size = stringRedisTemplate.opsForList().size(BlockConstant.IP_Addresses);
-        assert size != null;
-        List<String> addresses = stringRedisTemplate.opsForList().range(BlockConstant.IP_Addresses, 0, size - 1);
-        assert addresses != null;
-        for (String address : addresses) {
-           nodeNotice(address, NoticeConstant.STOP_TRAIN);
-        }
-    }
 
     /**
      * 非委员开始训练
@@ -203,7 +194,7 @@ public class ModelServer extends ModelServiceGrpc.ModelServiceImplBase {
         }
     }
 
-    //TODO 结束训练
+
     public void finishTrain(){
         Long size = stringRedisTemplate.opsForList().size(BlockConstant.IP_Addresses);
         assert size != null;

@@ -2,6 +2,7 @@ package com.block.service;
 
 import com.block.BlockProto;
 import com.block.BlockServiceGrpc;
+import com.block.utils.Args;
 import com.block.utils.BlockConstant;
 import com.block.utils.NoticeConstant;
 import com.google.common.util.concurrent.FutureCallback;
@@ -20,11 +21,11 @@ import java.util.concurrent.Executors;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class BoardService {
+public class ManageService {
     private final StringRedisTemplate stringRedisTemplate;
 
     public Set<Integer> setRandomBoard(){
-        stringRedisTemplate.opsForValue().set(BlockConstant.GLOBAL_ROUNDS, "5");
+        stringRedisTemplate.opsForValue().set(BlockConstant.GLOBAL_ROUNDS, "3");
         Long size = stringRedisTemplate.opsForList().size(BlockConstant.IP_Addresses);
         assert size != null;
         long rate = size / 3;
@@ -42,6 +43,8 @@ public class BoardService {
     }
     public void startTrain(){
         stringRedisTemplate.opsForValue().set(BlockConstant.GLOBAL_STATE, BlockConstant.GLOBAL_TRAIN);
+        stringRedisTemplate.opsForValue().set(Args.ACC_THRESHOLD.getName(), "0.5");
+        stringRedisTemplate.opsForValue().set(Args.MODEL_NUM_THRESHOLD.getName(), "3");
         Long size = stringRedisTemplate.opsForList().size(BlockConstant.IP_Addresses);
         Set<Integer> boards = setRandomBoard();
         assert size != null;

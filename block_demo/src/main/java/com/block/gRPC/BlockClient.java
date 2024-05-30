@@ -8,11 +8,9 @@ import com.block.ModelServiceGrpc;
 import com.block.model.Block;
 
 import com.block.model.Transaction;
+import com.block.utils.Args;
 import com.block.utils.BlockConstant;
 import com.block.utils.ProtobufBeanUtil;
-import com.google.common.util.concurrent.FutureCallback;
-import com.google.common.util.concurrent.Futures;
-import com.google.common.util.concurrent.ListenableFuture;
 import com.google.protobuf.Empty;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -208,9 +206,16 @@ public class BlockClient {
         try {
             ModelServiceGrpc.ModelServiceBlockingStub stub = ModelServiceGrpc.newBlockingStub(channel);
             ModelProto.initData.Builder builder = ModelProto.initData.newBuilder();
-            builder.setAccThreshold(0.7);
-            builder.setModelNumThreshold(5);
+
+            String accThreshold = stringRedisTemplate.opsForValue().get(Args.ACC_THRESHOLD.getName());
+            assert accThreshold != null;
+            builder.setAccThreshold(Double.parseDouble(accThreshold));
+
+            String modelNumThreshold = stringRedisTemplate.opsForValue().get(Args.MODEL_NUM_THRESHOLD.getName());
+            assert modelNumThreshold != null;
+            builder.setModelNumThreshold(Integer.parseInt(modelNumThreshold));
             ModelProto.Msg msg = stub.init(builder.build());
+
             System.out.println(msg.getData());
         }catch (Exception e){
             log.error(e.getMessage(), e);
